@@ -1,0 +1,24 @@
+<%- if post.errors %>
+  <ul class="errors">
+  <%- post.errors.each do |error| %>
+    <li><%= error.to_s %></li>
+  <%- end %>
+  </ul>
+<%- end %>
+
+<%- action = (post.id ? "/posts/" + post.id.to_s : "/posts") %>
+<form action="<%= action %>" method="post">
+  <%= csrf_tag %>
+  <%- if post.id %>
+  <input type="hidden" name="_method" value="patch" />
+  <%- end %>
+
+  <div class="form-group">
+    <%= text_field(name: "title", value: post.title, placeholder: "Title", class: "form-control") -%>
+  </div>
+  <div class="form-group">
+    <%= text_area(name: "body", content: post.body, placeholder: "Body", class: "form-control", size: "30x10") -%>
+  </div>
+  <%= submit("Submit", class: "btn btn-success btn-sm") -%>
+  <%= link_to("Back", "/posts", class: "btn btn-light btn-sm") -%>
+</form>
